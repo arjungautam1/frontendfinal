@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- <script src="product-detail.js" defer></script> -->
+</head>
+
+<body>
+    <!-- Navbar -->
+    <header>
+        <nav class="navbar">
+            <div class="navbar-logo">
+                <a href="index.html">E-Shop</a>
+            </div>
+            <ul class="navbar-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="cart.html">Cart (<span id="cart-count">0</span>)</a></li>
+                <li><a href="edit-user.html">Profile</a></li>
+                <li><a href="login.html">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Contact Section -->
+    <section id="contact-container">
+        <h2>Contact Us</h2>
+        <p>We'd love to hear from you! Please fill out the form below, and we'll get back to you as soon as possible.
+        </p>
+        <form id="contact-form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" placeholder="Enter your name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" placeholder="Enter your email" required>
+
+            <label for="message">Message:</label>
+            <textarea id="message" placeholder="Write your message here..." rows="5" required></textarea>
+
+            <button type="submit">Submit</button>
+        </form>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 YourShop. All rights reserved.</p>
+        <ul class="footer-links">
+            <li><a href="#privacy">Privacy Policy</a></li>
+            <li><a href="#terms">Terms of Service</a></li>
+            <li><a href="#contact">Contact Us</a></li>
+        </ul>
+    </footer>
+
+    <!-- Reusable Pop-Up -->
+    <div id="popup" class="popup" style="display: none;">
+        <div class="popup-content">
+            <p id="popup-message"></p>
+            <button id="popup-close">OK</button>
+        </div>
+    </div>
+
+    <script>
+        // Show the pop-up
+        function showPopup(message, callback) {
+            const popup = document.getElementById("popup");
+            const popupMessage = document.getElementById("popup-message");
+            const popupClose = document.getElementById("popup-close");
+
+            // Set the message
+            popupMessage.textContent = message;
+
+            // Show the pop-up
+            popup.style.display = "flex";
+
+            // Close the pop-up
+            popupClose.onclick = () => {
+                popup.style.display = "none"; // Hide the pop-up
+                if (callback) callback(); // Execute callback if provided
+            };
+        }
+
+        // Handle form submission
+        document.getElementById("contact-form").addEventListener("submit", (event) => {
+            event.preventDefault();
+
+            const name = document.getElementById("name").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const message = document.getElementById("message").value.trim();
+
+            if (name && email && message) {
+                // Log the message or send it to a server (logic to be implemented)
+                showPopup("Thank you for reaching out! We'll get back to you shortly.");
+                document.getElementById("contact-form").reset();
+            }
+        });
+        // Load and display the cart count when the page loads
+document.addEventListener("DOMContentLoaded", () => {
+    updateCartCount(); // Update the cart count on load
+    //loadProductDetails(); // Load product details and related products
+});
+
+// Function to update the cart count in the navbar
+function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+    document.getElementById("cart-count").textContent = cartCount;
+}
+    </script>
+</body>
+
+</html>
